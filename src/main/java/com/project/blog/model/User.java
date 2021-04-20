@@ -29,10 +29,10 @@ import lombok.NoArgsConstructor;
 public class User {
 	
 	@Id //Primary key
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	//IDENTITY -> 프로젝트에 연결된 DB의 넘버링 전략을 따라간다. //만약 Oracle은 sequence, MYSQL은 autoincreament를 사용하겠다는것!
+	@GeneratedValue(strategy = GenerationType.IDENTITY)	//IDENTITY -> 프로젝트에 연결된 DB의 넘버링 전략을 따라간다. //만약 Oracle은 sequence, MYSQL은 Auto increament를 사용하겠다는것!
 	private int id;	//시퀀스, auto_increament
 	
-	@Column(nullable = false, length = 30)
+	@Column(nullable = false, length = 30, unique = true)
 	private String username; //아이디
 	
 	@Column(nullable = false, length = 100) // 123456 => 해쉬 (비밀번호 암호화)
