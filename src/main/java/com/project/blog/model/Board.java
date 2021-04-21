@@ -39,7 +39,7 @@ public class Board {
 	private String title;
 	
 	@Lob //대용량 데이터
-	private String content;	// 섬머노트 라이브러르 <html>태그가 섞여서 디자인됨..데이터 길이가 엄청 길다.
+	private String content;	// 섬머노트 라이브러리 <html>태그가 섞여서 디자인됨..데이터 길이가 엄청 길다.
 	
 	@ColumnDefault("0")
 	private int count; //조회수
