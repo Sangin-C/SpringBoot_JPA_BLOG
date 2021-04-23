@@ -1,8 +1,10 @@
 package com.project.blog.controller;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+
+import com.project.blog.config.auth.PrincipalDetail;
 
 
 // 인증이 안된 사람들이 출입할 수 있는 경로를 /auth/** 허용해줄것임..!
@@ -21,6 +23,11 @@ public class UserController {
 	public String loginForm() {
 		
 		return "user/loginForm";
+	}
+	
+	@GetMapping("/user/updateForm")
+	public String userForm(@AuthenticationPrincipal PrincipalDetail principal) {
+		return "user/updateForm";
 	}
 	
 }

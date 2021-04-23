@@ -3,6 +3,10 @@ let index = {
 		$("#btn-save").on("click", () => {	//function(){}, () => {} this를 바인딩하기 위해서!!
 			this.save();
 		});
+		
+		$("#btn-update").on("click", () => {	//function(){}, () => {} this를 바인딩하기 위해서!!
+			this.update();
+		});
 	},
 	
 	save: function() {
@@ -23,6 +27,28 @@ let index = {
 			contentType : "application/json; charset=utf-8 ",	//body데이터가 어떤 타입인지(MIME)
 			dataType : "json"	//요청을 서버로해서 응답이 왔을 때 기본적으로 모든 것이 문자열이다 ( 응답이 json이면 ) => 자동으로 javascript Object로 변경해준다..!
 		}).done(function(resp) {
+			alert("회원 등록이 완료되었습니다.");
+			location.href="/";
+		}).fail(function(error) {
+			alert(JSON.stringify(error));
+		}); 
+	},
+	
+	update: function() {
+		let data = {
+			id : $("#id").val(),
+			username: $("#username").val(),
+			password: $("#password").val(),
+			email: $("#email").val()
+		}
+		$.ajax({
+			type: "PUT",
+			url: "/user/update",
+			data : JSON.stringify(data),
+			contentType : "application/json; charset=utf-8 ",
+			dataType : "json"
+		}).done(function(resp) {
+			alert("회원 수정이 완료되었습니다.");
 			location.href="/";
 		}).fail(function(error) {
 			alert(JSON.stringify(error));

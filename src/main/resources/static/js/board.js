@@ -27,6 +27,7 @@ let index = {
 			contentType : "application/json; charset=utf-8 ",
 			dataType : "json"
 		}).done(function(resp) {
+			alert("글 등록이 완료되었습니다.");
 			location.href="/";
 		}).fail(function(error) {
 			alert(JSON.stringify(error));
@@ -41,6 +42,7 @@ let index = {
 			url:"/api/board/"+id,
 			dataType:"json"
 		}).done(function(resp){
+			alert("글 삭제가 완료되었습니다.");
 			location.href="/";
 		}).fail(function(error){
 			alert(JSON.stringify(error));
