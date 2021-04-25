@@ -22,9 +22,7 @@ public class UserService {
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
-	
-	@Autowired
-	private AuthenticationManager authenticationManager;
+
 	
 	
 	@Transactional	//전체가 성공하면 commit이 되고 아니면 rollback이 된다!
