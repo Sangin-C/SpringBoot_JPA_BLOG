@@ -10,9 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.DynamicInsert;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +30,7 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	//IDENTITY -> 프로젝트에 연결된 DB의 넘버링 전략을 따라간다. //만약 Oracle은 sequence, MYSQL은 Auto increament를 사용하겠다는것!
 	private int id;	//시퀀스, auto_increament
 	
-	@Column(nullable = false, length = 30, unique = true)
+	@Column(nullable = false, length = 100, unique = true)
 	private String username; //아이디
 	
 	@Column(nullable = false, length = 100) // 123456 => 해쉬 (비밀번호 암호화)
@@ -45,6 +43,8 @@ public class User {
 	// DB는 RoleType이라는게 없다.
 	@Enumerated(EnumType.STRING)
 	private RoleType role; //Enum을 쓰는게 좋다. // admin, user, manager (권한)
+	
+	private String oauth; //kakao, google 등등 로그인을 무엇으로 했는지..!
 	
 	@CreationTimestamp	// 시간이 자동 입력
 	private Timestamp createDate;

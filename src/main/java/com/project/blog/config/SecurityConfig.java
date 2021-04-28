@@ -58,9 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 				.formLogin()
 				.loginPage("/auth/loginForm")
 				.loginProcessingUrl("/auth/loginProc")	//스프링 시큐리티가 해당 주소로 오는 로그인을 개로채서 대신 로드인해준다..!
-				.defaultSuccessUrl("/")//정상적으로 요청이 완료되었을때 "/" 로 이동
+				.defaultSuccessUrl("/");//정상적으로 요청이 완료되었을때 "/" 로 이동
 				//.failureUrl("/")	//실패시 이동!!
-				;	
 	}
 
 }
