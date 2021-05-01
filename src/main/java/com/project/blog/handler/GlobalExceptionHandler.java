@@ -12,8 +12,8 @@ import com.project.blog.dto.ResponseDto;
 @RestController
 public class GlobalExceptionHandler {
 	
-	@ExceptionHandler(value=IllegalArgumentException.class)	//IllegalArgumentException 이 발생하면 이 메서드로 매핑시켜준다.
-	public ResponseDto<String> handleArgumentException(IllegalArgumentException e) {
+	@ExceptionHandler(value=Exception.class)	//IllegalArgumentException 이 발생하면 이 메서드로 매핑시켜준다.
+	public ResponseDto<String> handleArgumentException(Exception e) {
 		return new ResponseDto<String>(HttpStatus.INTERNAL_SERVER_ERROR.value(), e.getMessage());
 	}
 }
