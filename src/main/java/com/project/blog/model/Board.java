@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -53,6 +54,7 @@ public class Board {
 	@OneToMany(mappedBy = "board", fetch = FetchType.EAGER)	//mapperBy 연관관계의 주인이 아니다 ( 난  FK가 아니다 ) DB에 컬럼을 만들지 말아줘~~! FK는 Reply테이블에있는 boardId이기 때문이다! //OneToMany의 기본전략 -> FetchType.LAZY 는 필요하면 들고오고 아니면 안들고올게!! //하지만 우리는 무조건 다 들고올것이기때문에 EAGER전략으로 변경한다!
 	//@JoinColumn(name="replyId") 필요없다!! 왜?? reply는 여러개이기 때문에 replyId가 여러개가 들어가야하기 때문에 제1정규화에 위배된다..!
 	@JsonIgnoreProperties({"board"})
+	@OrderBy("id desc")	//내림차순으로 정렬
 	private List<Reply> replys;
 	
 	@CreationTimestamp
