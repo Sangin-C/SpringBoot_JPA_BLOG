@@ -22,7 +22,7 @@ import com.project.blog.repository.UserRepository;
 public class BoardService {
 
 	private static final int BLOCK_PAGE_NUM_COUNT = 5;	//블럭에 들어갈 페이지 갯수
-	private static final int PAGE_POST_COUNT = 2;		//한 페이지에 존재하는 게시글의 수
+	private static final int PAGE_POST_COUNT = 5;		//한 페이지에 존재하는 게시글의 수
 	
 	@Autowired
 	private UserRepository userRepository;
@@ -42,24 +42,14 @@ public class BoardService {
 	
 	@Transactional(readOnly = true)
 	public Page<Board> 글목록(Integer pageNum){
-		
 		Page<Board> page = boardRepository
 				.findAll(PageRequest
 						.of(pageNum-1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createDate")));
-		
-		/*
-		 * List<Board> boards = page.getContent(); List<Board> boardList = new
-		 * ArrayList<>();
-		 * 
-		 * for(Board board : boards) { boardList.add(board); }
-		 */
-
 		return page;
 	}
 	
 	@Transactional
 	public List<Integer> 페이지목록(Integer curPageNum) {
-		//Integer[] pageList = new Integer[BLOCK_PAGE_NUM_COUNT];
 		List<Integer> pageList = new ArrayList<>();
 		//총 게시글 수 
 		Double postsTotalCount = Double.valueOf(boardRepository.count());
