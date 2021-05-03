@@ -9,7 +9,7 @@
 
 
 <div class="container">
-	<c:forEach var="board" items="${boards.content }">
+	<c:forEach var="board" items="${boardList.content }">
 		<div class="card m-2">
 			<div class="card-body">
 				<h4 class="card-title">${board.title }</h4>
@@ -20,23 +20,26 @@
 
 	<ul class="pagination justify-content-center">
 		<c:choose>
-			<c:when test="${boards.first }">
-				<li class="page-item disabled"><a class="page-link" href="?page=${boards.number-1 }">Previous</a></li>
+			<c:when test="${boardList.first }">
+				<li class="page-item disabled"><a class="page-link" href="?page=${boardList.number }">Previous</a></li>
 			</c:when>
 			<c:otherwise>
-				<li class="page-item"><a class="page-link" href="?page=${boards.number-1 }">Previous</a></li>
+				<li class="page-item"><a class="page-link" href="?page=${boardList.number }">Previous</a></li>
 			</c:otherwise>
 		</c:choose>
-		
+
+		<c:forEach var="page" items="${pageList }">
+			<li class="page-item"><a class="page-link" href="?page=${page }">${page }</a></li>
+		</c:forEach>
+
 		<c:choose>
-			<c:when test="${boards.last }">
-				<li class="page-item disabled"><a class="page-link" href="?page=${boards.number+1 }">Next</a></li>
+			<c:when test="${boardList.last }">
+				<li class="page-item disabled"><a class="page-link" href="?page=${boardList.number+2 }">Next</a></li>
 			</c:when>
 			<c:otherwise>
-				<li class="page-item"><a class="page-link" href="?page=${boards.number+1 }">Next</a></li>
+				<li class="page-item"><a class="page-link" href="?page=${boardList.number+2 }">Next</a></li>
 			</c:otherwise>
 		</c:choose>
-		
 	</ul>
 </div>
 

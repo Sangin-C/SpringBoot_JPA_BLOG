@@ -1,8 +1,12 @@
 package com.project.blog.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +21,9 @@ import com.project.blog.repository.UserRepository;
 @Service // 스프링이 컴포넌트 스캔을 통해서 Bean에 등록을 해줌. IoC를 해준다!!
 public class BoardService {
 
+	private static final int BLOCK_PAGE_NUM_COUNT = 5;	//블럭에 들어갈 페이지 갯수
+	private static final int PAGE_POST_COUNT = 2;		//한 페이지에 존재하는 게시글의 수
+	
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -34,8 +41,46 @@ public class BoardService {
 	}
 	
 	@Transactional(readOnly = true)
-	public Page<Board> 글목록(Pageable pageable){
-		return boardRepository.findAll(pageable);
+	public Page<Board> 글목록(Integer pageNum){
+		
+		Page<Board> page = boardRepository
+				.findAll(PageRequest
+						.of(pageNum-1, PAGE_POST_COUNT, Sort.by(Sort.Direction.ASC, "createDate")));
+		
+		/*
+		 * List<Board> boards = page.getContent(); List<Board> boardList = new
+		 * ArrayList<>();
+		 * 
+		 * for(Board board : boards) { boardList.add(board); }
+		 */
+
+		return page;
+	}
+	
+	@Transactional
+	public List<Integer> 페이지목록(Integer curPageNum) {
+		//Integer[] pageList = new Integer[BLOCK_PAGE_NUM_COUNT];
+		List<Integer> pageList = new ArrayList<>();
+		//총 게시글 수 
+		Double postsTotalCount = Double.valueOf(boardRepository.count());
+		
+		//총 게시글 수 기준으로 계산한 마지막 페이지 번호
+		Integer totalLastPageNum = (int) (Math.ceil(postsTotalCount/PAGE_POST_COUNT));
+		System.out.println("======totalLastPageNum : " + totalLastPageNum);
+		//현재 페이지를 기준으로 블럭의 마지막 페이지 번호
+		Integer blockLastPageNum = (totalLastPageNum > curPageNum + BLOCK_PAGE_NUM_COUNT)
+				? curPageNum + BLOCK_PAGE_NUM_COUNT
+				: totalLastPageNum;
+		
+		//페이지 시작 번호 조정
+		curPageNum = (curPageNum<=3) ? 1 : curPageNum-2;
+		
+		// 페이지 번호 할당
+		for(int val=curPageNum, i=0; val<=blockLastPageNum; val++, i++) {
+			pageList.add(val);
+		}
+		
+		return pageList;
 	}
 	
 	@Transactional(readOnly = true)
