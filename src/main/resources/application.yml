@@ -8,6 +8,10 @@ server:
       force: true
     
 spring:
+  redis:
+    host: 27.96.130.90
+    port: 6379
+
   mvc:
     view:
       prefix: /WEB-INF/views/
