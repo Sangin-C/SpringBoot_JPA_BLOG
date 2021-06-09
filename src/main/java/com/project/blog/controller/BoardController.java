@@ -1,6 +1,7 @@
 package com.project.blog.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@GetMapping({"", "/"})
+	@Cacheable(value = "boardList")
 	public String index(Model model, @RequestParam(value = "page", defaultValue = "1") Integer pageNum) {
 		//model.addAttribute("pageInfo" , boardService.글목록(pageNum));
 		model.addAttribute("boardList", boardService.글목록(pageNum));
@@ -24,6 +26,7 @@ public class BoardController {
 	}
 	
 	@GetMapping("/board/{id}")
+	@Cacheable(value = "board", key = "#id")
 	public String fineByid(@PathVariable int id, Model model) {
 		model.addAttribute("board", boardService.글상세보기(id));
 		return "board/detail";
